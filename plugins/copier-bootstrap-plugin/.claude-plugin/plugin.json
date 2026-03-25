@@ -1,0 +1,5 @@
+{
+  "name": "copier-bootstrap-plugin",
+  "description": "Bootstrap new projects using Copier templates (FastAPI, RabbitMQ workers, CLI tools, React, AWS Lambda, GCF)",
+  "version": "1.0.0"
+}

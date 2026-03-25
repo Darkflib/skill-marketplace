@@ -47,6 +47,11 @@
       "name": "term-extractor-plugin",
       "source": "./plugins/term-extractor-plugin",
       "description": "Extract technical terms and domain vocabulary from text into structured YAML format"
+    },
+    {
+      "name": "copier-bootstrap-plugin",
+      "source": "./plugins/copier-bootstrap-plugin",
+      "description": "Bootstrap new projects using Copier templates (FastAPI, RabbitMQ workers, CLI tools, React, AWS Lambda, GCF)"
     }
   ]
 }
