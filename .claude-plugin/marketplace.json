@@ -1,0 +1,52 @@
+{
+  "name": "skill-marketplace",
+  "owner": {
+    "name": "Mike",
+    "email": "darkflib@gmail.com"
+  },
+  "metadata": {
+    "description": "A plugin marketplace for Claude Code skills and tools"
+  },
+  "plugins": [
+    {
+      "name": "kroki-plugin",
+      "source": "./plugins/kroki-plugin",
+      "description": "Generate diagrams from plain text using a Kroki server"
+    },
+    {
+      "name": "python-production-versions-plugin",
+      "source": "./plugins/python-production-versions-plugin",
+      "description": "Python production library versions, deprecated packages, and compatibility. Provides version floors with local project overrides."
+    },
+    {
+      "name": "project-planning-plugin",
+      "source": "./plugins/project-planning-plugin",
+      "description": "Structured 4-step methodology for planning and breaking down new software projects"
+    },
+    {
+      "name": "python-cli-scaffold-plugin",
+      "source": "./plugins/python-cli-scaffold-plugin",
+      "description": "Scaffolds Python CLI tools with Click framework and Rich terminal output"
+    },
+    {
+      "name": "python-fastapi-scaffold-plugin",
+      "source": "./plugins/python-fastapi-scaffold-plugin",
+      "description": "Scaffolds modern Python FastAPI projects with UV, Docker, and K8s support"
+    },
+    {
+      "name": "python-worker-scaffold-plugin",
+      "source": "./plugins/python-worker-scaffold-plugin",
+      "description": "Scaffolds Python background worker projects for RabbitMQ with CloudEvents"
+    },
+    {
+      "name": "sast-plugin",
+      "source": "./plugins/sast-plugin",
+      "description": "Run a full SAST pipeline across a codebase using Semgrep, Bandit, Trufflehog, and Safety"
+    },
+    {
+      "name": "term-extractor-plugin",
+      "source": "./plugins/term-extractor-plugin",
+      "description": "Extract technical terms and domain vocabulary from text into structured YAML format"
+    }
+  ]
+}

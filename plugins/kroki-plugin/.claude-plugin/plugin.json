@@ -1,0 +1,5 @@
+{
+  "name": "kroki-plugin",
+  "description": "Generate diagrams from plain text using a Kroki server",
+  "version": "1.0.0"
+}

@@ -1,0 +1,5 @@
+{
+  "name": "term-extractor-plugin",
+  "description": "Extract technical terms and domain vocabulary from text into structured YAML format",
+  "version": "1.0.0"
+}

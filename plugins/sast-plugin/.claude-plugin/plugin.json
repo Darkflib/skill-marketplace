@@ -1,0 +1,5 @@
+{
+  "name": "sast-plugin",
+  "description": "Run a full SAST pipeline across a codebase using Semgrep, Bandit, Trufflehog, and Safety",
+  "version": "1.0.0"
+}

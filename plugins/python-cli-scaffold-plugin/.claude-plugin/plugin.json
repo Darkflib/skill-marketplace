@@ -1,0 +1,5 @@
+{
+  "name": "python-cli-scaffold-plugin",
+  "description": "Scaffolds Python CLI tools with Click framework and Rich terminal output",
+  "version": "1.0.0"
+}

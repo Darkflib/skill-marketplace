@@ -1,0 +1,5 @@
+{
+  "name": "python-fastapi-scaffold-plugin",
+  "description": "Scaffolds modern Python FastAPI projects with UV, Docker, and K8s support",
+  "version": "1.0.0"
+}

@@ -1,0 +1,5 @@
+{
+  "name": "python-worker-scaffold-plugin",
+  "description": "Scaffolds Python background worker projects for RabbitMQ with CloudEvents",
+  "version": "1.0.0"
+}
