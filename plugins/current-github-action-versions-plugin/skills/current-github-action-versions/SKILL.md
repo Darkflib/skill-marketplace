@@ -17,5 +17,5 @@ actions/setup-node@v6
 actions/upload-artifact@v7
 actions/download-artifact@v8
 softprops/action-gh-release@v3
-astral-sh/setup-uv@v8
+astral-sh/setup-uv@v8.1.0
 pypa/gh-action-pypi-publish@release/v1
