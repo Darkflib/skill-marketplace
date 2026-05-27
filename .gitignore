@@ -1,1 +1,4 @@
 incoming/
+__pycache__/
+*.pyc
+.mypy_cache/

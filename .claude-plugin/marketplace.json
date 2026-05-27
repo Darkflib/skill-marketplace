@@ -52,6 +52,21 @@
       "name": "copier-bootstrap-plugin",
       "source": "./plugins/copier-bootstrap-plugin",
       "description": "Bootstrap new projects using Copier templates (FastAPI, RabbitMQ workers, CLI tools, React, AWS Lambda, GCF)"
+    },
+    {
+      "name": "app-to-multiuser-plugin",
+      "source": "./plugins/app-to-multiuser-plugin",
+      "description": "Reverse-engineer a single-user GUI/Electron app into a PRD + ADR bundle ready for agentic multi-user web implementation"
+    },
+    {
+      "name": "current-github-action-versions-plugin",
+      "source": "./plugins/current-github-action-versions-plugin",
+      "description": "Current minimum versions of common GitHub Actions to avoid deprecation warnings in workflows"
+    },
+    {
+      "name": "agentic-repo-baseline-plugin",
+      "source": "./plugins/agentic-repo-baseline-plugin",
+      "description": "Audit a git repo for the baseline files agents need (README, AGENTS.md, WORKLOG, CHANGELOG, language tooling) and create sensible defaults for the gaps"
     }
   ]
 }

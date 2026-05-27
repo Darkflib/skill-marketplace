@@ -1,0 +1,5 @@
+{
+  "name": "agentic-repo-baseline-plugin",
+  "description": "Audit a git repo for the baseline files agents need (README, AGENTS.md, WORKLOG, CHANGELOG, language tooling) and create sensible defaults for the gaps",
+  "version": "1.0.0"
+}

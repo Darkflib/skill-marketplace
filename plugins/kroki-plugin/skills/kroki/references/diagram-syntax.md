@@ -177,6 +177,72 @@ Rel(api, db, "Reads/writes", "SQL")
 
 ---
 
+## DBML (`dbml`)
+
+Database markup language — useful for documenting schemas alongside SQLAlchemy
+models or Alembic migrations.
+
+```dbml
+Table users {
+  id integer [primary key]
+  email varchar [unique, not null]
+  created_at timestamp
+}
+
+Table orders {
+  id integer [primary key]
+  user_id integer [ref: > users.id]
+  total numeric
+  placed_at timestamp
+}
+```
+
+SVG only — no PNG output.
+
+---
+
+## ERD (`erd`)
+
+```erd
+[User]
+*id
++email
+created_at
+
+[Order]
+*id
++user_id
+total
+
+User 1--* Order
+```
+
+---
+
+## TikZ (`tikz`)
+
+LaTeX-style typesetting; pricey to render but unmatched for mathematical
+figures, circuits, and trees.
+
+```tikz
+\documentclass{standalone}
+\usepackage{tikz}
+\begin{document}
+\begin{tikzpicture}
+  \node[circle, draw] (A) at (0,0) {A};
+  \node[circle, draw] (B) at (2,1) {B};
+  \node[circle, draw] (C) at (2,-1) {C};
+  \draw[->] (A) -- (B);
+  \draw[->] (A) -- (C);
+\end{tikzpicture}
+\end{document}
+```
+
+Note: Kroki runs TikZ in a secure mode by default that blocks
+`\verbatiminput` and a few related commands.
+
+---
+
 ## Ditaa (`ditaa`)
 
 ```ditaa

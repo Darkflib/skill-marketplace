@@ -1,0 +1,5 @@
+{
+  "name": "current-github-action-versions-plugin",
+  "description": "Current minimum versions of common GitHub Actions to avoid deprecation warnings in workflows",
+  "version": "1.0.0"
+}

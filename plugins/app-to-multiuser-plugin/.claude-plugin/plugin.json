@@ -1,0 +1,5 @@
+{
+  "name": "app-to-multiuser-plugin",
+  "description": "Reverse-engineer a single-user GUI/Electron app into a PRD + ADR bundle ready for agentic multi-user web implementation",
+  "version": "1.0.0"
+}

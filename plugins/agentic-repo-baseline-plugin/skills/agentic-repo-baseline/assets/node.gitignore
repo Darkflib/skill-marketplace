@@ -1,0 +1,60 @@
+# Node
+node_modules/
+.pnp/
+.pnp.js
+.pnp.cjs
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+.svelte-kit/
+.vite/
+.parcel-cache/
+.turbo/
+
+# Testing & coverage
+coverage/
+.nyc_output/
+*.lcov
+
+# TypeScript
+*.tsbuildinfo
+.tscache/
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS
+Thumbs.db
+
+# Secrets and local env
+.env
+.env.*
+!.env.example
+!.env.template
+!.env.development
+!.env.production
+
+# Runtime data
+pids/
+*.pid
+*.seed
+
+# Misc
+.cache/
+tmp/

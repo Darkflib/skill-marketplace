@@ -1,0 +1,27 @@
+# {{ project_name }}
+
+{{ project_summary }}
+
+## Quick start
+
+```bash
+# install dependencies
+# (e.g. `uv sync` for Python, `npm install` for Node)
+
+# run
+# (e.g. `uv run <entry-point>`, `npm run dev`)
+```
+
+## Configuration
+
+Configuration is via environment variables. See `.env.example` for required values (when present).
+
+## Documentation
+
+- [AGENTS.md](AGENTS.md) — conventions for AI agents and contributors
+- [WORKLOG.md](WORKLOG.md) — in-flight work and notes
+- [CHANGELOG.md](CHANGELOG.md) — release notes
+
+## Licence
+
+MIT

@@ -1,0 +1,19 @@
+# Worklog
+
+In-flight work, design notes, and tasks queued up. Bridges sessions so an agent picking up tomorrow knows what's mid-flight without reading the entire commit log.
+
+## In progress
+
+_(nothing yet — add entries when you start work)_
+
+## Up next
+
+_(nothing queued — add entries as ideas land)_
+
+## Done
+
+_(items move here once landed; periodically prune to CHANGELOG.md when releases happen)_
+
+## Notes
+
+_(design decisions, weird gotchas, deferred items — anything an agent might need to know on the next session)_
