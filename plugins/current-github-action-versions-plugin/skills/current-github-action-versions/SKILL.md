@@ -37,7 +37,7 @@ docker/build-push-action@v7
 ```
 softprops/action-gh-release@v3
 pypa/gh-action-pypi-publish@release/v1   # intentionally a branch ref, not a tag
-astral-sh/setup-uv@v10
+astral-sh/setup-uv@v10.0.1
 goreleaser/goreleaser-action@v7
 stefanzweifel/git-auto-commit-action@v7
 ```
@@ -47,9 +47,9 @@ stefanzweifel/git-auto-commit-action@v7
 ```
 actions/attest@v4
 actions/attest-build-provenance@v4
-actions/dependency-review-action@v5
+actions/dependency-review-action@v5.0.0
 github/codeql-action@v4                  # init / analyze / upload-sarif
-sigstore/cosign-installer@v4
+sigstore/cosign-installer@v4.1.2
 anchore/sbom-action@v0.24                # v0.x — no floating major tag, pin a minor
 gitleaks/gitleaks-action@v3
 aquasecurity/trivy-action@v0.36          # v0.x — no floating major tag, pin a minor
@@ -69,7 +69,7 @@ actions/deploy-pages@v5
 peter-evans/create-pull-request@v8
 peter-evans/create-or-update-comment@v5
 peter-evans/find-comment@v4
-marocchino/sticky-pull-request-comment@v3
+marocchino/sticky-pull-request-comment@v3.0.5
 amannn/action-semantic-pull-request@v6
 dorny/paths-filter@v4
 actions/labeler@v7
@@ -103,7 +103,7 @@ Most major bumps are runtime upgrades and are safe. These are the ones that chan
 - **Node 24 runtime (most `actions/*` and `docker/*` majors in this list).** Requires Actions Runner **v2.327.1+**. Irrelevant on GitHub-hosted runners; **update self-hosted runners first** or jobs fail to start. Applies to `setup-python@v6`, `upload-artifact@v6`, `labeler@v6`, `stale@v10`, `codecov-action@v6`, `paths-filter@v4`, `docker/*@v4`/`build-push-action@v7`, and others.
 - **`actions/checkout@v7`** — now *blocks* checking out a fork PR head under `pull_request_target` and `workflow_run`. If a workflow deliberately checks out untrusted fork code there, v7 breaks it. That is the safe behaviour; rework the workflow rather than pinning back.
 - **`astral-sh/setup-uv@v9`** — default cache pruning disabled. Caches get larger, which can raise Actions cache storage cost.
-- **`astral-sh/setup-uv@v10`** — with the default `enable-cache: auto`, the cache is now **disabled entirely** for `pull_request_target`, `workflow_run` and `release` events (cache-poisoning defence). Jobs still pass but lose the cache speedup.
+- **`astral-sh/setup-uv` v10** — with the default `enable-cache: auto`, the cache is now **disabled entirely** for `pull_request_target`, `workflow_run` and `release` events (cache-poisoning defence). Jobs still pass but lose the cache speedup.
 - **`actions/download-artifact@v8`** — hash mismatches now **error by default** (previously tolerated), and the action moved to ESM.
 - **`actions/setup-node@v5`** — caches automatically when `package.json` has a `packageManager` field; set `package-manager-cache: false` to opt out. **`@v6`** narrows that auto-caching to npm only.
 - **`actions/setup-python@v7`** — the `pip-install` input was removed.
@@ -122,5 +122,9 @@ Most major bumps are runtime upgrades and are safe. These are the ones that chan
 - **Don't guess a version that isn't in this list.** Check upstream instead:
   ```bash
   gh api repos/OWNER/REPO/releases/latest --jq .tag_name
+  ```
+- **Some actions publish no floating major tag.** `astral-sh/setup-uv` stopped at `v7`, and `actions/dependency-review-action`, `sigstore/cosign-installer` and `marocchino/sticky-pull-request-comment` have none for their current major. `@v10` etc. simply fails to resolve with *"unable to find version"* — use the exact tag above or a SHA. Verify with:
+  ```bash
+  gh api repos/OWNER/REPO/git/ref/tags/v10 --jq .object.sha
   ```
 - **v0.x actions have no stable major tag.** Pin at least the minor (`@v0.24`) or a SHA; `@v0` either doesn't exist or moves across breaking changes.
