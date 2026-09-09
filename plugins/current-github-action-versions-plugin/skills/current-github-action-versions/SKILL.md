@@ -96,6 +96,21 @@ cloudflare/wrangler-action@v4
 slackapi/slack-github-action@v4          # v1.x is long dead; the API changed at v2
 ```
 
+## Risky jumps
+
+Most major bumps are runtime upgrades and are safe. These are the ones that change behaviour — check them before bumping, especially on a repo you can't easily re-run.
+
+- **Node 24 runtime (most `actions/*` and `docker/*` majors in this list).** Requires Actions Runner **v2.327.1+**. Irrelevant on GitHub-hosted runners; **update self-hosted runners first** or jobs fail to start. Applies to `setup-python@v6`, `upload-artifact@v6`, `labeler@v6`, `stale@v10`, `codecov-action@v6`, `paths-filter@v4`, `docker/*@v4`/`build-push-action@v7`, and others.
+- **`actions/checkout@v7`** — now *blocks* checking out a fork PR head under `pull_request_target` and `workflow_run`. If a workflow deliberately checks out untrusted fork code there, v7 breaks it. That is the safe behaviour; rework the workflow rather than pinning back.
+- **`astral-sh/setup-uv@v9`** — default cache pruning disabled. Caches get larger, which can raise Actions cache storage cost.
+- **`astral-sh/setup-uv@v10`** — with the default `enable-cache: auto`, the cache is now **disabled entirely** for `pull_request_target`, `workflow_run` and `release` events (cache-poisoning defence). Jobs still pass but lose the cache speedup.
+- **`actions/download-artifact@v8`** — hash mismatches now **error by default** (previously tolerated), and the action moved to ESM.
+- **`actions/setup-node@v5`** — caches automatically when `package.json` has a `packageManager` field; set `package-manager-cache: false` to opt out. **`@v6`** narrows that auto-caching to npm only.
+- **`actions/setup-python@v7`** — the `pip-install` input was removed.
+- **`docker/build-push-action@v7`** — removed the deprecated `DOCKER_BUILD_NO_SUMMARY` and `DOCKER_BUILD_EXPORT_RETENTION_DAYS` env vars.
+- **`slackapi/slack-github-action@v2`** — full rework of how payloads are sent (YAML payloads, explicit API method selection). **A v1 config will not carry over**; rewrite the step.
+- **`DavidAnson/markdownlint-cli2-action`** — majors track markdownlint-cli2 itself, so a bump can introduce new rules that fail docs which previously linted clean.
+
 ## Notes
 
 - **Prefer SHA pinning for third-party actions.** Use the full 40-char commit SHA with the version in a trailing comment, which is the convention already used across these repos:
