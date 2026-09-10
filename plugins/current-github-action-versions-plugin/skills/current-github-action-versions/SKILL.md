@@ -37,7 +37,7 @@ docker/build-push-action@v7
 ```
 softprops/action-gh-release@v3
 pypa/gh-action-pypi-publish@release/v1   # intentionally a branch ref, not a tag
-astral-sh/setup-uv@v10.0.1
+astral-sh/setup-uv@v10.1.0
 goreleaser/goreleaser-action@v7
 stefanzweifel/git-auto-commit-action@v7
 ```
@@ -119,6 +119,7 @@ Most major bumps are runtime upgrades and are safe. These are the ones that chan
 - **`actions/setup-python@v7`** — the `pip-install` input was removed.
 - **`docker/build-push-action@v7`** — removed the deprecated `DOCKER_BUILD_NO_SUMMARY` and `DOCKER_BUILD_EXPORT_RETENTION_DAYS` env vars.
 - **`google-github-actions/auth@v3`** — removed the `retries`, `backoff` and `backoff_limit` inputs alongside the Node 24 bump. A step still passing any of them fails.
+- **`astral-sh/setup-uv` with a pinned `version:`** — the action only verifies the uv download against a checksum table baked into that release. Pin a uv version newer than the table and it logs *"No checksum found"* at **debug level and installs anyway** — it throws only on a mismatch, never on a miss. So a stale setup-uv silently drops verification while CI stays green. If you pin `version:`, keep setup-uv new enough to know it (v10.0.1 stops at uv 0.12.4; v10.1.0 reaches 0.12.12), or use `version: "latest-known"`.
 - **`slackapi/slack-github-action@v2`** — full rework of how payloads are sent (YAML payloads, explicit API method selection). **A v1 config will not carry over**; rewrite the step.
 - **`DavidAnson/markdownlint-cli2-action`** — majors track markdownlint-cli2 itself, so a bump can introduce new rules that fail docs which previously linted clean.
 
