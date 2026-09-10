@@ -5,7 +5,7 @@ description: "A list of current versions of github actions. Use when creating or
 
 Make sure the actions versions are at least these. Older versions are producing warnings and deprecation notices.
 
-Versions verified against upstream releases on 2026-09-10. Treat each entry as a **floor**, not a pin — never downgrade a workflow that is already on something newer.
+Versions verified against upstream releases on 2026-09-10. Each entry is a **version floor — which major to be on, not how to reference it**. Never downgrade a workflow already on something newer, and see [Notes](#notes) for when a floating tag is fine and when to SHA-pin.
 
 ## Core
 
@@ -44,7 +44,7 @@ stefanzweifel/git-auto-commit-action@v7
 
 ## Cloud auth (OIDC)
 
-Prefer OIDC federation over long-lived secrets in all three.
+Prefer OIDC federation over long-lived secrets in all three — and **SHA-pin these**: they mint credentials, and none of them is `actions/*` or `docker/*`, so the pinning rule below applies.
 
 ```
 google-github-actions/auth@v3            # WIF: workload_identity_provider + service_account
