@@ -1,0 +1,5 @@
+{
+  "name": "found-footage-scare-plugin",
+  "description": "Build found-footage / CCTV-style jumpscare videos from stills with ffmpeg - pacing, audio sting design, and passing as a camera export",
+  "version": "1.0.0"
+}

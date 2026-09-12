@@ -67,6 +67,11 @@
       "name": "agentic-repo-baseline-plugin",
       "source": "./plugins/agentic-repo-baseline-plugin",
       "description": "Audit a git repo for the baseline files agents need (README, AGENTS.md, WORKLOG, CHANGELOG, language tooling) and create sensible defaults for the gaps"
+    },
+    {
+      "name": "found-footage-scare-plugin",
+      "source": "./plugins/found-footage-scare-plugin",
+      "description": "Build found-footage / CCTV-style jumpscare videos from stills with ffmpeg - pacing, audio sting design, and passing as a camera export"
     }
   ]
 }

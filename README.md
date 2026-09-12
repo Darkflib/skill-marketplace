@@ -17,6 +17,7 @@ Issues and pull requests are welcome.
 | Plugin | Description |
 |--------|-------------|
 | **copier-bootstrap** | Bootstrap new projects using Copier templates. Supports FastAPI services, RabbitMQ workers, CLI tools, React frontends, AWS Lambda functions, and Google Cloud Functions. |
+| **found-footage-scare** | Build found-footage / CCTV-style jumpscare videos from stills with ffmpeg. Covers pacing the lull, reveal and hit, audio sting design and gain staging, and making output pass as a genuine camera export. |
 | **kroki** | Generate diagrams from plain text using a Kroki server. Supports PlantUML, Mermaid, GraphViz/DOT, D2, Structurizr, Ditaa, Svgbob, Excalidraw, and more. |
 | **project-planning** | Structured 4-step methodology for planning and breaking down new software projects. Follows a human-in-the-loop gated process with clear deliverables at each stage. |
 | **python-cli-scaffold** | Scaffold Python CLI tools with Click and Rich. Includes command groups, progress bars, tables, spinners, structured logging, testing, and Docker support. |
