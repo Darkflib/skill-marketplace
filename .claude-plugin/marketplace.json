@@ -72,6 +72,26 @@
       "name": "found-footage-scare-plugin",
       "source": "./plugins/found-footage-scare-plugin",
       "description": "Build found-footage / CCTV-style jumpscare videos from stills with ffmpeg - pacing, audio sting design, and passing as a camera export"
+    },
+    {
+      "name": "op-cli-plugin",
+      "source": "./plugins/op-cli-plugin",
+      "description": "Verified behaviour and traps of the 1Password CLI (op) when driven from code - silent no-op edits, FIFO-only stdin, field-blanking round-trips, and keeping secrets out of argv"
+    },
+    {
+      "name": "python-desktop-packaging-plugin",
+      "source": "./plugins/python-desktop-packaging-plugin",
+      "description": "Package Python desktop apps (PyInstaller, PyWebView, Briefcase, py2app) for macOS, Linux and Windows, and verify the built artefact actually works"
+    },
+    {
+      "name": "merman-plugin",
+      "source": "./plugins/merman-plugin",
+      "description": "Render Mermaid diagrams headlessly with merman-cli (Rust, no browser/Node) to SVG, PNG, PDF or terminal ASCII/Unicode"
+    },
+    {
+      "name": "humanise-prose-plugin",
+      "source": "./plugins/humanise-prose-plugin",
+      "description": "Remove AI writing tells from prose so it reads as naturally human-authored"
     }
   ]
 }

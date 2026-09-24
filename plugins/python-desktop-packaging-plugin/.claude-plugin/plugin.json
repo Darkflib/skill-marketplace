@@ -1,0 +1,5 @@
+{
+  "name": "python-desktop-packaging-plugin",
+  "description": "Package Python desktop apps (PyInstaller, PyWebView, Briefcase, py2app) for macOS, Linux and Windows, and verify the built artefact actually works",
+  "version": "1.0.0"
+}

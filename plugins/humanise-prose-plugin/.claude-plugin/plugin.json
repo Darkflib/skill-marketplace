@@ -1,0 +1,5 @@
+{
+  "name": "humanise-prose-plugin",
+  "description": "Remove AI writing tells from prose so it reads as naturally human-authored",
+  "version": "1.0.0"
+}
