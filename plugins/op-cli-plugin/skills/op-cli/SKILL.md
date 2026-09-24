@@ -58,14 +58,18 @@ async def op_with_stdin(*args: str, data: bytes) -> tuple[int, bytes, bytes]:
         os.close(w); raise
     finally:
         os.close(r)
+    writer = asyncio.ensure_future(asyncio.to_thread(_write_all_and_close, w, data))
+    comm = asyncio.ensure_future(proc.communicate())
     try:
-        _, (out, err) = await asyncio.gather(
-            asyncio.to_thread(_write_all_and_close, w, data), proc.communicate())
+        # shield: a cancelled request must not cancel communicate() mid-drain
+        await asyncio.shield(asyncio.gather(writer, comm))
     except BaseException:                 # incl. CancelledError from a dropped request
         if proc.returncode is None:
-            proc.kill()                   # cancelling communicate() doesn't stop the child
-            await asyncio.shield(proc.wait())   # reap it; the writer thread then gets EPIPE
+            proc.kill()                   # cancellation alone doesn't stop the child
+        # let communicate() finish draining and reap the child; the writer gets EPIPE
+        await asyncio.gather(writer, comm, return_exceptions=True)
         raise
+    out, err = comm.result()
     return proc.returncode, out, err
 ```
 
