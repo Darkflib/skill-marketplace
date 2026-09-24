@@ -155,8 +155,10 @@ Identify the target reader and trim explanations they wouldn't need.
 ### The Perfect Citation
 Humans get things slightly wrong, cite from memory, attribute imprecisely.
 AI produces perfectly attributed, perfectly phrased references to concepts.
-In informal prose, loosen precise attributions: "somewhere in the TCP spec"
-rather than "according to RFC 9293, section 3.4".
+In informal prose, loosen the *phrasing* around a reference rather than the
+reference itself: "RFC 9293 covers this (3.4, if you want the detail)" rather
+than "according to RFC 9293, section 3.4". Never drop a citation the reader
+might need to check.
 
 ### The Emotional Flatline
 AI prose has no affect — no mild irritation, no enthusiasm, no dry observation.

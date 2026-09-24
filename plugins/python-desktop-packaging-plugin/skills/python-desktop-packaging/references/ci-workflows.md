@@ -97,7 +97,9 @@ infrastructure. Declaring any `permissions:` block sets everything omitted to
 `none`, so add `contents: read` too — without it the checkout before the build,
 and the attestation step itself in private repositories, fail. `gh attestation verify` is the consumer side — but it defaults
 to the provenance predicate, so finding an SBOM attestation needs
-`--predicate-type https://cyclonedx.org/bom` or `https://spdx.dev/Document`.
+`--predicate-type https://cyclonedx.org/bom` (verified) or, for SPDX,
+`https://spdx.dev/Document/v2.3` as GitHub's docs show it — match whatever type
+the attestation records.
 
 A verified provenance attestation records `runnerEnvironment: github-hosted`.
 That field is the whole argument for keeping releases off self-hosted runners,
@@ -110,8 +112,10 @@ Failed to persist attestation: Feature not available for user-owned private
 repositories. To enable this feature, please make this repository public.
 ```
 
-Note *user-owned*. An org-owned private repository with GitHub Advanced
-Security is the route that keeps source closed. The alternatives are making the
+Note *user-owned*. GitHub's docs put attestations in private or internal
+repositories on the **GitHub Enterprise Cloud** plan; Free, Pro and Team get
+public repositories only. An org on Enterprise Cloud is the route that keeps
+source closed. The alternatives are making the
 repository public, or shipping without attestation.
 
 Give the release workflow an input to disable attestation so the rest of the

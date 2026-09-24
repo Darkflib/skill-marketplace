@@ -57,8 +57,10 @@ merman-cli [OPTIONS] [INPUT] [COMMAND]
 ## Developer subcommands
 
 These expose merman's pipeline stages. Each takes Mermaid input the same way as
-top-level mode (`[INPUT]` positionally or `-i`, `-` for stdin) and prints JSON
-to stdout. `--pretty` pretty-prints it.
+top-level mode (`[INPUT]` positionally or `-i`, `-` for stdin). `detect`,
+`parse` and `layout` print JSON to stdout (`--pretty` pretty-prints it);
+`render` (below) writes the chosen diagram format instead, and `help` prints
+plain text — don't pipe either into a JSON parser.
 
 **stdin warning goes to stderr.** Reading from stdin prints `No input file
 specified, reading from stdin…` — even when you passed `-i -`. It lands on

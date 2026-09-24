@@ -67,8 +67,10 @@ The partial exceptions, in descending order of trustworthiness:
 
 - **macOS `universal2`** works only if the interpreter *and* every native wheel
   are universal2. uv's python-build-standalone and Homebrew are single-arch;
-  python.org installers are universal2. Building on each arch and `lipo`-ing is
-  less clever and more reliable.
+  python.org installers are universal2. Do **not** `lipo` two single-arch
+  frozen builds together — PyInstaller documents that the result runs on only
+  one architecture. Ship separate arm64 and x86_64 artefacts, which is less
+  clever and more reliable.
 - **Windows under Wine** is documented as possible and explicitly unsupported.
 - **Docker** gets you Linux-from-Linux. It does nothing for macOS or Windows.
 

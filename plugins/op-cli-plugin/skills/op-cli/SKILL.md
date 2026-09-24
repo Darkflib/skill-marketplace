@@ -17,6 +17,11 @@ Given any other kind of stdin — notably a **socket** — `op` ignores it, appl
 **exits 0 with nothing on stderr**. The item's `updated_at`/`version` still bump, so it even looks
 like something happened.
 
+For `op item create`, the documented form for a piped template is
+`op item create - --vault <vault>`, with `-` as the first positional argument. Pass it: 2.34.1
+also picks up piped stdin without it (see *Inherited stdin gets eaten*), but relying on that is
+relying on undocumented behaviour.
+
 This bites whenever the parent isn't a shell:
 
 | Parent | Child stdin with "PIPE" | `op` reads it? |
@@ -53,8 +58,14 @@ async def op_with_stdin(*args: str, data: bytes) -> tuple[int, bytes, bytes]:
         os.close(w); raise
     finally:
         os.close(r)
-    _, (out, err) = await asyncio.gather(
-        asyncio.to_thread(_write_all_and_close, w, data), proc.communicate())
+    try:
+        _, (out, err) = await asyncio.gather(
+            asyncio.to_thread(_write_all_and_close, w, data), proc.communicate())
+    except BaseException:                 # incl. CancelledError from a dropped request
+        if proc.returncode is None:
+            proc.kill()                   # cancelling communicate() doesn't stop the child
+            await asyncio.shield(proc.wait())   # reap it; the writer thread then gets EPIPE
+        raise
     return proc.returncode, out, err
 ```
 
@@ -75,6 +86,13 @@ emptied. So when editing via stdin:
 
 - start from a fresh `op item get … --format json` of the same item (not a cached copy),
 - change only the values you mean to change, send everything else back untouched.
+
+**Items with a passkey are out.** 1Password's docs say JSON templates don't support passkeys:
+editing such an item from piped JSON or `--template` overwrites the passkey (not verified here). Check
+for a passkey before any round-trip and, if there is one, fall back to assignment syntax — which
+puts the value in argv, so for a secret field on such an item stop and tell the user rather than
+pick the lesser evil silently. A field-by-field read-back won't notice a lost passkey unless it
+checks for one.
 
 Fields **added** to the JSON are created (id/label = your name, `"type": "CONCEALED"` for secrets).
 Fields you update keep their existing `id`. No separate "create field" step is needed.

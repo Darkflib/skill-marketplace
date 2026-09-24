@@ -4,8 +4,9 @@ description: >
   Render Mermaid diagrams to standalone images with merman-cli, a Rust port of
   Mermaid.js that needs no browser, no Node, and no Puppeteer/Chromium. Use
   whenever the user wants to turn Mermaid source — flowchart, sequence, class,
-  state, ER, Gantt, C4, mindmap, gitgraph, etc. — into SVG, PNG, JPG, PDF, or
-  terminal ASCII/Unicode, or to render every Mermaid block in a Markdown file.
+  state, ER, Gantt, C4, mindmap, gitgraph, etc. — into SVG, PNG, JPG or PDF,
+  or (for most types, not C4) terminal ASCII/Unicode, or to render every
+  Mermaid block in a Markdown file.
   Trigger on "render this mermaid", "make an SVG/PNG of this diagram", "draw a
   flowchart", "mmdc", "headless mermaid", or any request to produce a diagram
   image from Mermaid text locally. Prefer merman over a browser-based renderer
@@ -28,7 +29,10 @@ reaching for:
 
 - **Renders to the terminal** as ASCII or Unicode. Use this for a quick preview
   inline (no image file needed) or for diagrams in a text-only context such as a
-  CI log or a README rendered in a pager.
+  CI log or a README rendered in a pager. Coverage varies by type: flowchart,
+  sequence, state, class and ER draw as diagrams; Gantt, gitgraph and mindmap
+  come out as structured text; **C4 has no terminal output** — offer SVG
+  instead.
 - **Deterministic output.** With the deterministic text measurer and pinned
   time/seed, the same source produces byte-identical output across runs — golden-file
   testable, unlike a browser whose font rendering drifts.

@@ -75,8 +75,10 @@ say essentially the same thing, cut or substantially rewrite one of them.
 Humans end when they've made the point.
 
 **Exhaustive enumeration**: AI lists every case. Humans pick the important ones
-and gesture at the rest ("among other things", "and so on"). Trim lists by
-~30% unless completeness is the explicit goal.
+and gesture at the rest ("among other things", "and so on"). Cut repeated or
+filler items, not a fixed percentage. Where the list is requirements,
+instructions or anything else the reader must act on, keep every item that
+carries distinct information.
 
 **Bullet point collapse**: If bullet points could be a sentence or short
 paragraph without losing clarity, collapse them. Reserve bullets for genuinely
@@ -106,10 +108,10 @@ with their audience. For the target register, trim any explanation that the
 intended reader would already know. Replace with a brief reference rather
 than a definition.
 
-**Opinions and takes**: For `medium` and `heavy` intensity, inject a mild
-perspective or preference where the text currently hedges to both sides.
-Humans usually have a view. The view doesn't need to be strong, but it
-should exist.
+**Opinions and takes**: For `medium` and `heavy` intensity, where the draft
+hedges but already leans one way, commit to that lean. Humans usually have a
+view. Don't invent one the draft doesn't support: if it is genuinely balanced,
+keep the balance or ask the user which position they hold.
 
 **Self-interruption**: Occasional parenthetical, dash-aside, or trailing
 qualifier reads as natural thought. AI produces clean complete sentences.

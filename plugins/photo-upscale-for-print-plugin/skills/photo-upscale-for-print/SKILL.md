@@ -100,6 +100,10 @@ Cheap checks that each catch a specific failure:
   loudly. Infer architecture from the checkpoint: `conv_first` input channels
   give the scale (3 -> x4, 12 -> x2, 48 -> x1); the highest `body.N` index gives
   the block count. Weights live under `params_ema` or `params`.
+- **x2 needs even dimensions.** `pixel_unshuffle` by 2 fails on an odd width or
+  height, so a 384px test crop passes and an odd-sized full frame or edge tile
+  doesn't. Pad to a multiple of two (reflect) before inference and crop the
+  output back by twice the padding.
 - **Residual scaling is 0.2** in both the RDB and the RRDB. Getting it wrong
   raises no exception and silently degrades output.
 - **Tiled inference must divide by accumulated weight,** not average. Keep two
@@ -107,6 +111,10 @@ Cheap checks that each catch a specific failure:
   then divide. Raised-cosine ramps are C-1 continuous, unlike linear ones, but
   with `step = tile - 2*overlap` they do *not* form a partition of unity — the
   accumulated weight can reach ~1.5, and the division is what makes it exact.
+  Don't ramp at the image's outer edges: a window that reaches zero there leaves
+  the border pixels with zero accumulated weight and the division yields NaN.
+  Hold edge tiles at full weight on exterior sides and ramp only where tiles
+  overlap.
 - **OpenCV's `medianBlur` only accepts ksize <= 5 above 8-bit depth.** For 16-bit
   repair, iterate a 5x5 median and combine with a greyscale opening.
 - **A morphological top-hat finds eyelashes as readily as dust.** Both are bright

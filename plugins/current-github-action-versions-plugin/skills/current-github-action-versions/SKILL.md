@@ -126,8 +126,8 @@ Most major bumps are runtime upgrades and are safe. These are the ones that chan
 
 ## Gotchas that are not version bumps
 
-- **Artifact attestations do not work on user-owned private repositories.** `actions/attest*` fails with *"Failed to persist attestation: Feature not available for user-owned private repositories. To enable this feature, please make this repository public."* Note **user-owned**: an org-owned private repository with GitHub Advanced Security is the route that keeps source closed. Confirmed on 2026-09-22 by running the same workflow against a user-owned private repository (failed) and a public one (both provenance and CycloneDX SBOM attestations verified with `gh attestation verify`).
-- **`gh attestation verify` needs the right `--predicate-type` to find an SBOM attestation.** It defaults to provenance. A CycloneDX SBOM is under `https://cyclonedx.org/bom` (no version suffix — `.../bom/v1.6` 404s); SPDX is under `https://spdx.dev/Document`.
+- **Artifact attestations do not work on user-owned private repositories.** `actions/attest*` fails with *"Failed to persist attestation: Feature not available for user-owned private repositories. To enable this feature, please make this repository public."* Note **user-owned**: GitHub's docs put attestations in private or internal repositories on the GitHub Enterprise Cloud plan (Free, Pro and Team get public repositories only), so an org on Enterprise Cloud is the route that keeps source closed. Confirmed on 2026-09-22 by running the same workflow against a user-owned private repository (failed) and a public one (both provenance and CycloneDX SBOM attestations verified with `gh attestation verify`).
+- **`gh attestation verify` needs the right `--predicate-type` to find an SBOM attestation.** It defaults to provenance. A CycloneDX SBOM is under `https://cyclonedx.org/bom` (no version suffix — `.../bom/v1.6` 404s); for SPDX, GitHub's docs use `https://spdx.dev/Document/v2.3` (not verified here). Match the predicate type the attestation actually records.
 
 ## Notes
 
