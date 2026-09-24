@@ -92,6 +92,11 @@
       "name": "humanise-prose-plugin",
       "source": "./plugins/humanise-prose-plugin",
       "description": "Remove AI writing tells from prose so it reads as naturally human-authored"
+    },
+    {
+      "name": "photo-upscale-for-print-plugin",
+      "source": "./plugins/photo-upscale-for-print-plugin",
+      "description": "Upscale a scanned or low-resolution photograph for large-format print with Real-ESRGAN and a measured finishing chain"
     }
   ]
 }
