@@ -26,7 +26,7 @@ Establish these before transforming. Infer from context if obvious; ask if not.
 |-----------|---------|---------|
 | **Intensity** | `light` · `medium` · `heavy` | `medium` |
 | **Register** | `casual` · `professional` · `academic` | infer from text |
-| **Typos** | `none` · `subtle` · `moderate` | `subtle` |
+| **Typos** | `none` · `subtle` · `moderate` | `none` (only on explicit request) |
 | **Persona hint** | Optional free-text description of a voice to aim for | none |
 
 - `light`: Remove lexical tells and obvious hedging only. Minimal restructuring.
