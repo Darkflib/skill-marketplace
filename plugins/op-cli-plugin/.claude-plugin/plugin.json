@@ -1,0 +1,5 @@
+{
+  "name": "op-cli-plugin",
+  "description": "Verified behaviour and traps of the 1Password CLI (op) when driven from code - silent no-op edits, FIFO-only stdin, field-blanking round-trips, and keeping secrets out of argv",
+  "version": "1.0.0"
+}

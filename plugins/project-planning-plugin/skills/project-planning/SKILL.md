@@ -88,6 +88,7 @@ Provides a systematic 4-step workflow for planning software projects from initia
    - Infrastructure and hosting
    - CI/CD tooling
    - Monitoring and observability
+   - Deployment format (container, pypi package, faas archive)
 
 2. **MVP Feature Set**
    - Minimum features required for first deployment

@@ -1,0 +1,5 @@
+{
+  "name": "merman-plugin",
+  "description": "Render Mermaid diagrams headlessly with merman-cli (Rust, no browser/Node) to SVG, PNG, PDF or terminal ASCII/Unicode",
+  "version": "1.0.0"
+}

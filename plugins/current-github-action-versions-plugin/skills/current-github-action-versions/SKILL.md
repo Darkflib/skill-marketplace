@@ -55,7 +55,7 @@ azure/login@v3                           # OIDC federation, not SP secrets
 ## Supply chain & security
 
 ```
-actions/attest@v4
+actions/attest@v4                        # also replaces actions/attest-sbom
 actions/attest-build-provenance@v4
 actions/dependency-review-action@v5.0.0
 github/codeql-action@v4                  # init / analyze / upload-sarif
@@ -120,8 +120,14 @@ Most major bumps are runtime upgrades and are safe. These are the ones that chan
 - **`docker/build-push-action@v7`** — removed the deprecated `DOCKER_BUILD_NO_SUMMARY` and `DOCKER_BUILD_EXPORT_RETENTION_DAYS` env vars.
 - **`google-github-actions/auth@v3`** — removed the `retries`, `backoff` and `backoff_limit` inputs alongside the Node 24 bump. A step still passing any of them fails.
 - **`astral-sh/setup-uv` with a pinned `version:`** — the action only verifies the uv download against a checksum table baked into that release. Pin a uv version newer than the table and it logs *"No checksum found"* at **debug level and installs anyway** — it throws only on a mismatch, never on a miss. So a stale setup-uv silently drops verification while CI stays green. If you pin `version:`, keep setup-uv new enough to know it (v10.0.1 stops at uv 0.12.4; v10.1.0 reaches 0.12.12), or use `version: "latest-known"`.
+- **`actions/attest-sbom` is deprecated.** It still runs, but warns: *"actions/attest-sbom has been deprecated, please use actions/attest instead"*. The migration is direct — `actions/attest@v4` takes `sbom-path` alongside `subject-path`, same inputs otherwise. Verified against a real run on 2026-09-22.
 - **`slackapi/slack-github-action@v2`** — full rework of how payloads are sent (YAML payloads, explicit API method selection). **A v1 config will not carry over**; rewrite the step.
 - **`DavidAnson/markdownlint-cli2-action`** — majors track markdownlint-cli2 itself, so a bump can introduce new rules that fail docs which previously linted clean.
+
+## Gotchas that are not version bumps
+
+- **Artifact attestations do not work on user-owned private repositories.** `actions/attest*` fails with *"Failed to persist attestation: Feature not available for user-owned private repositories. To enable this feature, please make this repository public."* Note **user-owned**: GitHub's docs put attestations in private or internal repositories on the GitHub Enterprise Cloud plan (Free, Pro and Team get public repositories only), so an org on Enterprise Cloud is the route that keeps source closed. Confirmed on 2026-09-22 by running the same workflow against a user-owned private repository (failed) and a public one (both provenance and CycloneDX SBOM attestations verified with `gh attestation verify`).
+- **`gh attestation verify` needs the right `--predicate-type` to find an SBOM attestation.** It defaults to provenance. A CycloneDX SBOM is under `https://cyclonedx.org/bom` (no version suffix — `.../bom/v1.6` 404s); for SPDX, GitHub's docs use `https://spdx.dev/Document/v2.3` (not verified here). Match the predicate type the attestation actually records.
 
 ## Notes
 
