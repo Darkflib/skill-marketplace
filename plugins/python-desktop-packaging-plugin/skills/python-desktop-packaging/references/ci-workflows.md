@@ -93,7 +93,9 @@ libraries the freezer added.
 `actions/attest-build-provenance` and `actions/attest` (which supersedes the
 deprecated `actions/attest-sbom` and takes `sbom-path` directly) need
 `id-token: write` and `attestations: write`, and no separate signing
-infrastructure. `gh attestation verify` is the consumer side — but it defaults
+infrastructure. Declaring any `permissions:` block sets everything omitted to
+`none`, so add `contents: read` too — without it the checkout before the build,
+and the attestation step itself in private repositories, fail. `gh attestation verify` is the consumer side — but it defaults
 to the provenance predicate, so finding an SBOM attestation needs
 `--predicate-type https://cyclonedx.org/bom` or `https://spdx.dev/Document`.
 

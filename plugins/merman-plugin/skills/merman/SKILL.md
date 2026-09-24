@@ -109,22 +109,27 @@ merman-cli -i chapter.md -a ./diagrams -j 4
 1. **Check availability** (above) on the first render of a session.
 2. **Locate or write the source.** If the user gave Mermaid, use it. If not,
    write it now — Claude knows Mermaid; see `references/cli-reference.md` for the
-   type cheat-sheet if a reminder helps. Save it to a temp file in
-   `/home/claude/` (e.g. `diagram.mmd`) so iteration is cheap and the user can
+   type cheat-sheet if a reminder helps. Save it to a `.mmd` file (e.g.
+   `diagram.mmd`) alongside the output so iteration is cheap and the user can
    keep the source. Use `detect`/`parse` if unsure the source is valid.
 3. **Pick the format** from the table above. Default SVG; `unicode` for a
    throwaway inline preview; PNG/PDF when the user names them or the target
    demands raster/print.
-4. **Render.** Write the image to `/mnt/user-data/outputs/` with a descriptive
-   stem, not `output.svg`.
+4. **Render.** Write the image with a descriptive stem, not `output.svg`, to
+   a destination that exists in the current environment: the path the user
+   named, else the current workspace (or a temp directory for throwaway
+   previews). Don't assume a sandbox path such as `/mnt/user-data/outputs/` —
+   it exists on claude.ai, not in a local Claude Code session.
 5. **Surface the result:**
-   - **SVG** → render inline where the environment supports it (e.g. read the
-     file and pass its contents to `show_widget` as `widget_code`), *and* offer
-     the file via `present_files`. Mermaid SVGs carry their own palette, so they
-     will not pick up the host theme's CSS variables — that is expected.
+   - **SVG** → render inline if the environment has a tool for it (e.g.
+     `show_widget` on claude.ai), and always give the file path — or hand the
+     file over with whatever file-sharing tool the host provides
+     (`present_files` on claude.ai). Mermaid SVGs carry their own palette, so
+     they will not pick up the host theme's CSS variables — that is expected.
    - **ASCII/Unicode** → put it straight in the reply inside a fenced code
      block. It is text; no file or image tool needed.
-   - **PNG/JPG/PDF** → `present_files` only; binary cannot render inline.
+   - **PNG/JPG/PDF** → give the file path (or share it via the host's file
+     tool); binary cannot render inline.
 6. **Iterate** on theme, scale, or layout — change `-t`, `-c`, `-C`, `-s`, or
    the source and re-render.
 
