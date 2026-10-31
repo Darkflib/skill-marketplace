@@ -1,0 +1,5 @@
+{
+  "name": "social-image-sizes-plugin",
+  "description": "Image dimensions, aspect ratios and file limits for 20 social and web platforms, with Open Graph and Twitter Card images, plus a lookup and fit-check script",
+  "version": "1.0.0"
+}
