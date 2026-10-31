@@ -190,7 +190,11 @@ def cmd_check(data, platform, asset, width, height):
     if w < lo.get("width", 0) or h < lo.get("height", 0):
         problems.append(f"below minimum {dims(lo)}")
     if w > hi.get("width", w) or h > hi.get("height", h):
-        problems.append(f"above maximum {dims(hi)}")
+        # some maxes are display sizes the platform scales down to, not upload limits
+        if re.search(r"displays up to|resized", a.get("qualifier", ""), re.I):
+            warnings.append(f"above display maximum {dims(hi)}; the platform scales it down")
+        else:
+            problems.append(f"above maximum {dims(hi)}")
 
     if "exact" in a["render"].lower() and (w, h) != (a.get("width"), a.get("height")):
         problems.append(f"must be exactly {a['width']}x{a['height']}")
