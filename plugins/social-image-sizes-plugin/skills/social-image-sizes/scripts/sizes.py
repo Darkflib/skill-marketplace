@@ -18,6 +18,7 @@ import json
 import os
 import re
 import sys
+import tempfile
 import urllib.request
 from pathlib import Path
 
@@ -151,13 +152,22 @@ def primary_ratio(a):
 
 
 def alternatives(a):
-    """Other accepted shapes: `also` alternates, plus ratios the prose says are also accepted."""
+    """Other accepted shapes: `also` alternates, ratios the prose says are also accepted,
+    and sentences that open with a ratio for a specific use ("1:1 for podcast playlists")."""
     alts = [(f"{x['width']}x{x['height']}", ratio(x["width"], x["height"]))
             for x in a.get("also", []) if x.get("label") == "alternate"]
     for text in [a.get("qualifier", "")] + a.get("detail", []):
         if "also" in text.lower():
             alts += [(f"{m[1]}:{m[2]}", ratio(float(m[1]), float(m[2]))) for m in re.finditer(RATIO, text)]
+        for m in re.finditer(r"(?:^|\.\s+)" + RATIO + r" for ([^.]+)", text):
+            alts.append((f"{m[1]}:{m[2]} ({m[3]})", ratio(float(m[1]), float(m[2]))))
     return alts
+
+
+def square_range(a):
+    """A single square upload within a pixel range ("a single 112–4096 px square"), as (lo, hi)."""
+    m = re.search(r"(\d+)\s*[–-]\s*(\d+) px square", a.get("qualifier", ""))
+    return (int(m[1]), int(m[2])) if m else None
 
 
 def ratio_range(a):
@@ -212,8 +222,12 @@ def cmd_check(data, platform, asset, width, height):
         problems.append(f"aspect {w}:{h} is outside the supported range {rng[2]}")
     if target is None and rng is None and "sizes" not in a:
         warnings.append("no structured aspect ratio for this asset; read its notes")
+    sq = square_range(a)
     if "sizes" in a and not any(s["width"] == w and s["height"] == h for s in a["sizes"]):
-        problems.append("not one of the required sizes: " + ", ".join(f"{s['width']}x{s['height']}" for s in a["sizes"]))
+        if sq and w == h and sq[0] <= w <= sq[1]:
+            warnings.append(f"not a manual-mode size; accepted as a single {sq[0]}-{sq[1]} px square for auto-resize, see its file limits")
+        else:
+            problems.append("not one of the required sizes: " + ", ".join(f"{s['width']}x{s['height']}" for s in a["sizes"]))
     print(f"{p['name']} / {a['label']}: {w}x{h}")
     for x in warnings:
         print(f"  warning: {x}")
@@ -266,10 +280,12 @@ def validate(data):
     return missing
 
 
-def write_atomic(path, text):
-    tmp = path.with_name(path.name + ".tmp")
-    tmp.write_text(text, encoding="utf-8")
-    os.replace(tmp, path)
+def stage(path, text):
+    """Write text to a uniquely named temp file next to path, for a later os.replace."""
+    fd, tmp = tempfile.mkstemp(dir=path.parent, prefix=f".{path.name}.", suffix=".tmp")
+    with os.fdopen(fd, "w", encoding="utf-8") as f:
+        f.write(text)
+    return Path(tmp)
 
 
 def cmd_refresh(out=None):
@@ -281,13 +297,21 @@ def cmd_refresh(out=None):
         sys.exit("Upstream file is missing required fields; not writing it:\n  " + "\n  ".join(missing[:20]))
     # upstream points at a schema.json it doesn't ship alongside the data
     fresh.pop("$schema", None)
-    write_atomic(target, json.dumps(fresh, indent=2, ensure_ascii=False) + "\n")
-    print(f"Wrote {target} (last_verified {fresh['meta']['last_verified']})")
-    if out is None:
-        buf = io.StringIO()
+    # render the tables first: it reads nested fields validate() doesn't, and
+    # nothing should be replaced until both outputs exist
+    buf = io.StringIO()
+    try:
         with contextlib.redirect_stdout(buf):
             cmd_markdown(fresh)
-        write_atomic(MARKDOWN, buf.getvalue())
+    except (KeyError, TypeError, AttributeError) as e:
+        sys.exit(f"Upstream file doesn't render ({type(e).__name__}: {e}); not writing it.")
+    staged = [(stage(target, json.dumps(fresh, indent=2, ensure_ascii=False) + "\n"), target)]
+    if out is None:
+        staged.append((stage(MARKDOWN, buf.getvalue()), MARKDOWN))
+    for tmp, path in staged:
+        os.replace(tmp, path)
+    print(f"Wrote {target} (last_verified {fresh['meta']['last_verified']})")
+    if out is None:
         print(f"Regenerated {MARKDOWN}")
 
 
