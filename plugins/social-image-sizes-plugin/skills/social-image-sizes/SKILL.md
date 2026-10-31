@@ -41,10 +41,14 @@ python3 scripts/sizes.py show twitter header           # one asset (aliases work
 python3 scripts/sizes.py search banner                 # find assets by keyword
 python3 scripts/sizes.py check youtube video-thumbnail 1280 720   # exit 1 if it won't fit
 python3 scripts/sizes.py markdown > references/sizes.md           # rebuild the tables
-python3 scripts/sizes.py refresh                       # pull latest data from upstream
+python3 scripts/sizes.py refresh                       # pull latest data, rebuild sizes.md
 ```
 
 Run it from the skill directory, or give the full path to the script.
+
+`check` tests the structured limits (`min`, `max`, exact sizes, `sizes`, aspect) plus
+alternative shapes and aspect ranges stated in the prose. When it prints a warning,
+read that asset's notes before you rely on the result.
 
 ## Rules When Answering
 

@@ -1,5 +1,4 @@
 {
-  "$schema": "./schema.json",
   "meta": {
     "title": "Social Media Image Sizes Reference Guide",
     "repository": "https://github.com/chuckreynolds/social-profile-image-sizes",

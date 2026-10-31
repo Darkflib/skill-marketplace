@@ -10,7 +10,7 @@ Source: https://github.com/chuckreynolds/social-profile-image-sizes (MIT). Last 
 
 | Asset | Size | Aspect | Notes |
 |---|---|---|---|
-| Profile Photo | 400 x 400 | 1:1 | max 2MB; JPEG / GIF / PNG, no animated GIFs |
+| Profile Photo | 400 x 400 | 1:1 | max 2MB; JPEG / GIF / PNG, no animated GIFs; formats: jpeg, gif, png |
 | Header Image | 1500 x 500 | 3:1 | ~60 px top and bottom can crop depending on monitor/browser |
 | Post Image † | 1024 x 512 | 2:1 | displays inline as 506 x 253; 1200 x 675 also common for landscape; display: 506x253; alternate: 1200x675 |
 | Article Image † | 5:2 ratio, e.g. 1000 x 400 | 5:2 |  |
@@ -24,10 +24,10 @@ Sources: [help.x.com — uploading profile photos and headers and best sizes](ht
 | Asset | Size | Aspect | Notes |
 |---|---|---|---|
 | Profile Photo † | 320 x 320 | 1:1 | displays as a circle; Facebook no longer states a size |
-| Cover Photo | 851 x 315 optimal |  | 400 x 150 min; sRGB JPG under 100KB recommended; Crops to 16:9 on desktop and 2.4:1 on mobile — keep key content centered |
+| Cover Photo | 851 x 315 optimal |  | 400 x 150 min; sRGB JPG under 100KB recommended; Crops to 16:9 on desktop and 2.4:1 on mobile — keep key content centered; formats: jpg |
 | Post Link Image (Open Graph) | 1200 x 630 | 1.91:1 | 1.91:1; 600 x 315 min for the large render, 200 x 200 absolute min, 8MB max; minimum-for-feature: 600x315 |
 | Event Image † | 1200 x 628 | 1.91:1 |  |
-| App Icon † | 1024 x 1024 | 1:1 | PNG, for Facebook Login app config; Required by the app dashboard UI, but not stated in a fetchable public doc. |
+| App Icon † | 1024 x 1024 | 1:1 | PNG, for Facebook Login app config; Required by the app dashboard UI, but not stated in a fetchable public doc.; formats: png |
 
 Sources: [facebook.com/help — cover photo](https://www.facebook.com/help/125379114252045); [developers.facebook.com — sharing best practices](https://developers.facebook.com/docs/sharing/webmasters/images)
 
@@ -69,7 +69,7 @@ Sources:
 | Life Tab Main Image | 1128 x 376 | 3:1 |  |
 | Life Tab Custom Modules | 502 x 282 |  |  |
 | Life Tab Company Photos | 900 x 600 | 3:2 | 264 x 176 min |
-| Company Post Images (with link) | 1200 x 627 | 1.91:1 | 1.91:1, 200 px min width; All page images: PNG or JPEG, 3MB max — LinkedIn recommends a high-res JPEG over PNG |
+| Company Post Images (with link) | 1200 x 627 | 1.91:1 | 1.91:1, 200 px min width; All page images: PNG or JPEG, 3MB max — LinkedIn recommends a high-res JPEG over PNG; formats: png, jpeg |
 
 Sources: [linkedin.com/help — profile background](https://www.linkedin.com/help/linkedin/answer/a568217); [company & career pages](https://www.linkedin.com/help/linkedin/answer/a563309); [make your website shareable (link previews)](https://www.linkedin.com/help/linkedin/answer/46687)
 
@@ -79,7 +79,7 @@ Sources: [linkedin.com/help — profile background](https://www.linkedin.com/hel
 |---|---|---|---|
 | Profile Picture | displays at 98 x 98 | 1:1 | 15MB max; upload 800 x 800 so it stays sharp everywhere; alternate: 800x800 |
 | Channel Banner / Cover | 2048 x 1152 min | 16:9 | 16:9 ratio; 2560 x 1440 recommended for TV; safe area 1235 x 338; 6MB max; safe-area: 1235x338 |
-| Video Thumbnail | 3840 x 2160 recommended | 16:9 | 16:9, 640 px min width; 2MB max on mobile, 50MB on desktop; 1:1 for podcast playlists. Vertical videos with 16:9 thumbnails get an auto-generated 4:5 replacement in some surfaces. |
+| Video Thumbnail | 3840 x 2160 recommended | 16:9 | 16:9, 640 px min width; 2MB max on mobile, 50MB on desktop; 1:1 for podcast playlists. Vertical videos with 16:9 thumbnails get an auto-generated 4:5 replacement in some surfaces.; formats: jpg, gif, png |
 | YouTube Shorts Video † | 1080 x 1920 | 9:16 | YouTube documents Shorts as vertical but publishes no pixel dimension. |
 | Video Watermark | 150 x 150 min | 1:1 | square, under 1MB |
 
@@ -115,8 +115,8 @@ Sources: [bsky.app](https://bsky.app/); [AT Protocol lexicon - app.bsky.embed.ex
 
 | Asset | Size | Aspect | Notes |
 |---|---|---|---|
-| Avatar | downscales to 400 x 400 | 1:1 | max 2MB; WEBP/PNG/GIF/JPG |
-| Header | downscales to 1500 x 500 | 3:1 | max 2MB |
+| Avatar | downscales to 400 x 400 | 1:1 | max 2MB; WEBP/PNG/GIF/JPG; formats: webp, png, gif, jpg |
+| Header | downscales to 1500 x 500 | 3:1 | max 2MB; formats: webp, png, gif, jpg |
 
 Sources: [docs.joinmastodon.org — setting up your profile](https://docs.joinmastodon.org/user/profile/)
 
@@ -136,7 +136,7 @@ Sources: [support.reddithelp.com — community icon](https://support.reddithelp.
 |---|---|---|---|
 | Profile Photo † | upload 400 x 400 | 1:1 | displays as 165 x 165 circle; display: 165x165 |
 | Profile Cover † | 1920 x 1080 | 16:9 | 16:9; image or video |
-| Standard Pin | 1000 x 1500 | 2:3 | 2:3 ratio; larger ratios get cut off in feed; title: 100 char max — text box: 250 char max — description: up to 800 char (first 50–60 show in feed); safe zones: 270 px top, 65 px left, 195 px right, 790 px bottom; file: BMP / JPEG / PNG / TIFF / WEBP, 20MB max on web |
+| Standard Pin | 1000 x 1500 | 2:3 | 2:3 ratio; larger ratios get cut off in feed; title: 100 char max — text box: 250 char max — description: up to 800 char (first 50–60 show in feed); safe zones: 270 px top, 65 px left, 195 px right, 790 px bottom; file: BMP / JPEG / PNG / TIFF / WEBP, 20MB max on web; formats: bmp, jpeg, png, tiff, webp |
 | Video Pin | 1080 x 1920 | 9:16 | 9:16 ratio; 4 seconds to 5 minutes, H.264 or H.265 |
 | Board Cover † | 600 x 600 | 1:1 |  |
 
@@ -146,7 +146,7 @@ Sources: [business.pinterest.com — creative best practices](https://business.p
 
 | Asset | Size | Aspect | Notes |
 |---|---|---|---|
-| Avatar | 128 x 128 | 1:1 | max 10MB; JPEG / PNG / WEBP — GIFs go static |
+| Avatar | 128 x 128 | 1:1 | max 10MB; JPEG / PNG / WEBP — GIFs go static; formats: jpeg, png, webp |
 | Header Image | 2048 x 1152 | 16:9 | 16:9, max 10MB |
 | Post Image | 540 x 810 recommended | 2:3 | 2:3 dashboard view; displays up to 2048 x 3072 on click if no click-through link is set; 20MB per image; 10 images per post in the apps, 30 on web |
 
@@ -158,7 +158,7 @@ Sources: [help.tumblr.com — image & GIF troubleshooting](https://help.tumblr.c
 
 | Asset | Size | Aspect | Notes |
 |---|---|---|---|
-| Post Image | at least 1192 px wide |  | below that, the full-width and outset placement options don't appear; Max file size 25MB (.JPG, .JPEG, .GIF, .PNG) |
+| Post Image | at least 1192 px wide |  | below that, the full-width and outset placement options don't appear; Max file size 25MB (.JPG, .JPEG, .GIF, .PNG); formats: jpg, jpeg, gif, png |
 
 Sources: [help.medium.com — using images](https://help.medium.com/hc/en-us/articles/215679797-Using-images)
 
@@ -167,7 +167,7 @@ Sources: [help.medium.com — using images](https://help.medium.com/hc/en-us/art
 | Asset | Size | Aspect | Notes |
 |---|---|---|---|
 | Profile (Identicon) Picture † | 500 x 500 | 1:1 | GitHub publishes no avatar dimension; 500 x 500 is the generated identicon size. |
-| Repo Social Preview Image | 1280 x 640 | 2:1 | 640 x 320 min, under 1MB |
+| Repo Social Preview Image | 1280 x 640 | 2:1 | 640 x 320 min, under 1MB; formats: png, jpg, gif |
 
 Sources: [docs.github.com — repository social preview](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/customizing-your-repositorys-social-media-preview)
 
@@ -181,8 +181,8 @@ Sources: [docs.github.com — repository social preview](https://docs.github.com
 | Profile Banner | 1200 x 480 | 5:2 | scales to browser width; images are scaled to 480 high, so keep the artwork weighted left; The 3MB cap previously recorded here is not stated in the article and was dropped 2026-08-03. The article gives the dimension only: "The recommended size for a profile banner is 1200x480px." |
 | Panel Images | 320 x 300 max |  | under 2.9MB; larger images are resized to these maximums automatically |
 | Video Offline Banner † | 1920 x 1080 | 16:9 | 16:9; 1280 x 720 also accepted; alternate: 1280x720; Twitch documents no size for this. The channel setup article's "Upload a Video Player Banner" section gives steps only — and as of 2026-08-03 those steps are duplicated from the accent-colour section above it, so the article appears to have lost its banner instructions entirely. 1920 x 1080 remains the sensible upload size; it just cannot be cited. |
-| Subscriber Emoticons | 28 x 28, 56 x 56, 112 x 112 |  | PNG, under 100KB each in manual mode, or a single 112–4096 px square PNG under 1MB with auto-resize; PNG format and the 112–4096 px auto-resize range come from the Emote Guidelines article; animated emotes are GIF, with a 512KB per-file cap in manual mode.; Corrected 2026-08-03: this entry recorded a 512KB per-file cap, which is the animated-GIF figure. For standard emotes the guide states the three manual-mode files "must each be under 100KB".; sizes: 28x28, 56x56, 112x112 |
-| Subscriber Badges | 18 x 18, 36 x 36, 72 x 72 |  | PNG, ≤25KB each; sizes: 18x18, 36x36, 72x72 |
+| Subscriber Emoticons | 28 x 28, 56 x 56, 112 x 112 |  | PNG, under 100KB each in manual mode, or a single 112–4096 px square PNG under 1MB with auto-resize; PNG format and the 112–4096 px auto-resize range come from the Emote Guidelines article; animated emotes are GIF, with a 512KB per-file cap in manual mode.; Corrected 2026-08-03: this entry recorded a 512KB per-file cap, which is the animated-GIF figure. For standard emotes the guide states the three manual-mode files "must each be under 100KB".; formats: png; sizes: 28x28, 56x56, 112x112 |
+| Subscriber Badges | 18 x 18, 36 x 36, 72 x 72 |  | PNG, ≤25KB each; formats: png; sizes: 18x18, 36x36, 72x72 |
 
 Sources: [help.twitch.tv — channel page setup](https://help.twitch.tv/s/article/channel-page-setup); [subscriber emote guide](https://help.twitch.tv/s/article/subscriber-emote-guide); [emote formatting & instant emote upload requirements](https://help.twitch.tv/s/article/emote-guidelines); [subscriber badge guide](https://help.twitch.tv/s/article/subscriber-badge-guide)
 
@@ -190,7 +190,7 @@ Sources: [help.twitch.tv — channel page setup](https://help.twitch.tv/s/articl
 
 | Asset | Size | Aspect | Notes |
 |---|---|---|---|
-| Profile Image | square, at least 800 x 800 | 1:1 | max 2MB, .jpg or .png |
+| Profile Image | square, at least 800 x 800 | 1:1 | max 2MB, .jpg or .png; formats: jpg, png |
 | Track Artwork † | 1400 x 1400 | 1:1 | SoundCloud's upload guidance, not in the profile doc |
 | Profile Header Banner | at least 2480 x 520 |  | max 2MB — below 1240 x 260 the zoom control is disabled; minimum-for-feature: 1240x260 |
 
@@ -213,7 +213,7 @@ Sources: [help.nextdoor.com — add a banner, photo, or logo to your public agen
 
 | Asset | Size | Aspect | Notes |
 |---|---|---|---|
-| Logo & all photos | 720 x 720 recommended | 1:1 | 250 x 250 min, 10KB–5MB, JPG or PNG |
+| Logo & all photos | 720 x 720 recommended | 1:1 | 250 x 250 min, 10KB–5MB, JPG or PNG; formats: jpg, png |
 | Cover Photo † | 1024 x 576 | 16:9 | 16:9 — Google applies one spec to every photo type |
 
 Sources: [support.google.com/business — photos](https://support.google.com/business/answer/6103862)
@@ -222,7 +222,7 @@ Sources: [support.google.com/business — photos](https://support.google.com/bus
 
 | Asset | Size | Aspect | Notes |
 |---|---|---|---|
-| Header Logo | 320 x 132 exact |  | PNG / JPG / GIF, non-animated; renders across Gmail, Calendar, Drive |
+| Header Logo | 320 x 132 exact |  | PNG / JPG / GIF, non-animated; renders across Gmail, Calendar, Drive; formats: png, jpg, gif |
 
 Sources: [knowledge.workspace.google.com — add your logo to Google Workspace](https://knowledge.workspace.google.com/admin/getting-started/add-your-logo-to-google-workspace)
 
@@ -231,9 +231,9 @@ Sources: [knowledge.workspace.google.com — add your logo to Google Workspace](
 | Asset | Size | Aspect | Notes |
 |---|---|---|---|
 | Site Icon (Customizer → Site Identity → Site Icon) | square, at least 512 x 512 | 1:1 |  |
-| Theme Screenshot | 1200 x 900 | 4:3 | `screenshot.png` or `.jpg` in theme root; must not exceed 1200 x 900 |
-| Plugin Icons | 256 x 256, and 128 x 128 |  | sizes: 256x256, 128x128 |
-| Plugin Header Banners | 1544 x 500, and 772 x 250 |  | Plugin images go in an `/assets/` directory: `banner-1544x500.png`, `banner-772x250.png`, `icon-128x128.png`, `icon-256x256.png`; sizes: 1544x500, 772x250 |
+| Theme Screenshot | 1200 x 900 | 4:3 | `screenshot.png` or `.jpg` in theme root; must not exceed 1200 x 900; formats: png, jpg |
+| Plugin Icons | 256 x 256, and 128 x 128 |  | formats: png; sizes: 256x256, 128x128 |
+| Plugin Header Banners | 1544 x 500, and 772 x 250 |  | Plugin images go in an `/assets/` directory: `banner-1544x500.png`, `banner-772x250.png`, `icon-128x128.png`, `icon-256x256.png`; formats: png, jpg; sizes: 1544x500, 772x250 |
 
 Sources: [developer.wordpress.org — plugin assets](https://developer.wordpress.org/plugins/wordpress-org/plugin-assets/); [theme structure (screenshot)](https://developer.wordpress.org/themes/core-concepts/theme-structure/); [wordpress.org — customizer (site icon)](https://wordpress.org/documentation/article/customizer/)
 

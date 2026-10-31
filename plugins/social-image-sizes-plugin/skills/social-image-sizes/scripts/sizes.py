@@ -7,17 +7,23 @@ Usage:
   sizes.py search TERM                  # match platform/asset names, labels, notes
   sizes.py check PLATFORM ASSET W H     # does a W x H image fit this asset?
   sizes.py markdown                     # render the whole dataset as Markdown
-  sizes.py refresh [OUT]                # download the latest sizes.json from upstream
+  sizes.py refresh [OUT]                # download the latest sizes.json and rebuild sizes.md
 
 Stdlib only. Platform matching accepts ids, names and aliases (e.g. "twitter" -> x).
 """
 
+import contextlib
+import io
 import json
+import os
+import re
 import sys
 import urllib.request
 from pathlib import Path
 
-DATA = Path(__file__).resolve().parent.parent / "references" / "sizes.json"
+REFERENCES = Path(__file__).resolve().parent.parent / "references"
+DATA = REFERENCES / "sizes.json"
+MARKDOWN = REFERENCES / "sizes.md"
 UPSTREAM = (
     "https://raw.githubusercontent.com/chuckreynolds/"
     "social-profile-image-sizes/master/data/sizes.json"
@@ -25,7 +31,7 @@ UPSTREAM = (
 
 
 def load():
-    with DATA.open() as f:
+    with DATA.open(encoding="utf-8") as f:
         return json.load(f)
 
 
@@ -128,29 +134,80 @@ def ratio(w, h):
     return w / h if h else 0
 
 
+RATIO = r"(\d+(?:\.\d+)?):(\d+(?:\.\d+)?)"
+TOLERANCE = 0.02
+
+
+def close(r, target):
+    return abs(r - target) / target <= TOLERANCE
+
+
+def primary_ratio(a):
+    """The asset's main aspect ratio, from width/height or the aspect string."""
+    if "width" in a and "height" in a:
+        return ratio(a["width"], a["height"])
+    m = re.fullmatch(RATIO, a.get("aspect", ""))
+    return ratio(float(m[1]), float(m[2])) if m else None
+
+
+def alternatives(a):
+    """Other accepted shapes: `also` alternates, plus ratios the prose says are also accepted."""
+    alts = [(f"{x['width']}x{x['height']}", ratio(x["width"], x["height"]))
+            for x in a.get("also", []) if x.get("label") == "alternate"]
+    for text in [a.get("qualifier", "")] + a.get("detail", []):
+        if "also" in text.lower():
+            alts += [(f"{m[1]}:{m[2]}", ratio(float(m[1]), float(m[2]))) for m in re.finditer(RATIO, text)]
+    return alts
+
+
+def ratio_range(a):
+    """An "A:B to C:D" aspect range stated in the asset's prose, as (low, high)."""
+    for text in [a.get("qualifier", "")] + a.get("detail", []):
+        m = re.search(RATIO + r"\s+to\s+" + RATIO, text)
+        if m:
+            r1, r2 = ratio(float(m[1]), float(m[2])), ratio(float(m[3]), float(m[4]))
+            return min(r1, r2), max(r1, r2), f"{m[1]}:{m[2]} to {m[3]}:{m[4]}"
+    return None
+
+
 def cmd_check(data, platform, asset, width, height):
     p = find_platform(data, platform)
     a = find_asset(p, asset)
     w, h = int(width), int(height)
+    if w <= 0 or h <= 0:
+        sys.exit(f"Width and height must be positive integers, got {w}x{h}")
     problems, warnings = [], []
-    lo, hi = a.get("min", {}), a.get("max", {})
+    r = ratio(w, h)
+    target = primary_ratio(a)
+    shape_ok = target is None or close(r, target)
+    alt = None
+    if not shape_ok:
+        alt = next((label for label, ar in alternatives(a) if close(r, ar)), None)
+    rng = ratio_range(a)
+
+    # min/max describe the primary shape; an alternative shape has its own limits in prose
+    lo, hi = (a.get("min", {}), a.get("max", {})) if alt is None else ({}, {})
     if w < lo.get("width", 0) or h < lo.get("height", 0):
         problems.append(f"below minimum {dims(lo)}")
     if w > hi.get("width", w) or h > hi.get("height", h):
         problems.append(f"above maximum {dims(hi)}")
-    if "width" in a and "height" in a:
-        target = ratio(a["width"], a["height"])
-        if abs(ratio(w, h) - target) / target > 0.02:
-            problems.append(f"aspect {w}:{h} differs from {a.get('aspect', '?')} ({a['width']}x{a['height']})")
-        elif w < a["width"]:
-            warnings.append(f"right shape but smaller than recommended {a['width']}x{a['height']}")
-    elif "aspect" in a:
-        try:
-            aw, ah = (float(x) for x in a["aspect"].split(":"))
-        except ValueError:
-            aw = ah = 0
-        if ah and abs(ratio(w, h) - aw / ah) / (aw / ah) > 0.02:
-            problems.append(f"aspect {w}:{h} differs from {a['aspect']}")
+
+    if "exact" in a["render"].lower() and (w, h) != (a.get("width"), a.get("height")):
+        problems.append(f"must be exactly {a['width']}x{a['height']}")
+    elif alt:
+        warnings.append(f"matches alternative {alt}, not the primary {a.get('aspect', '?')}; check notes for its limits")
+    elif not shape_ok:
+        accepted = ", ".join(label for label, _ in alternatives(a))
+        problems.append(f"aspect {w}:{h} differs from {a.get('aspect', '?')}"
+                        + (f" ({a['width']}x{a['height']})" if "height" in a else "")
+                        + (f"; accepted alternatives: {accepted}" if accepted else ""))
+    elif "width" in a and "height" in a and w < a["width"]:
+        warnings.append(f"right shape but smaller than recommended {a['width']}x{a['height']}")
+
+    if rng and not (rng[0] * (1 - TOLERANCE) <= r <= rng[1] * (1 + TOLERANCE)):
+        problems.append(f"aspect {w}:{h} is outside the supported range {rng[2]}")
+    if target is None and rng is None and "sizes" not in a:
+        warnings.append("no structured aspect ratio for this asset; read its notes")
     if "sizes" in a and not any(s["width"] == w and s["height"] == h for s in a["sizes"]):
         problems.append("not one of the required sizes: " + ", ".join(f"{s['width']}x{s['height']}" for s in a["sizes"]))
     print(f"{p['name']} / {a['label']}: {w}x{h}")
@@ -178,6 +235,8 @@ def cmd_markdown(data):
             notes = [a.get("qualifier", "")]
             notes += [f"{x['label']}: {x['width']}x{x['height']}" for x in a.get("also", [])]
             notes += a.get("detail", []) + a.get("notes", [])
+            if "formats" in a:
+                notes.append("formats: " + ", ".join(a["formats"]))
             if "sizes" in a:
                 notes.append("sizes: " + ", ".join(f"{s['width']}x{s['height']}" for s in a["sizes"]))
             label = a["label"].replace("|", "\\|") + ("" if a["published"] else " †")
@@ -186,14 +245,46 @@ def cmd_markdown(data):
         print("\nSources: " + "; ".join(f"[{s['title']}]({s['url']})" for s in p["sources"]) + "\n")
 
 
+META_KEYS = ("title", "repository", "license", "last_verified", "units", "about_published_flag")
+PLATFORM_KEYS = ("id", "name", "sources", "assets")
+ASSET_KEYS = ("id", "label", "render", "published", "verified")
+
+
+def validate(data):
+    """Return a list of missing required fields; empty means the shape is usable."""
+    missing = [f"meta.{k}" for k in META_KEYS if k not in data.get("meta", {})]
+    if not isinstance(data.get("platforms"), list):
+        return missing + ["platforms"]
+    for p in data["platforms"]:
+        missing += [f"{p.get('id', '?')}.{k}" for k in PLATFORM_KEYS if k not in p]
+        for a in p.get("assets", []):
+            missing += [f"{p.get('id', '?')}/{a.get('id', '?')}.{k}" for k in ASSET_KEYS if k not in a]
+    return missing
+
+
+def write_atomic(path, text):
+    tmp = path.with_name(path.name + ".tmp")
+    tmp.write_text(text, encoding="utf-8")
+    os.replace(tmp, path)
+
+
 def cmd_refresh(out=None):
     target = Path(out) if out else DATA
     with urllib.request.urlopen(UPSTREAM, timeout=30) as r:
-        fresh = json.loads(r.read())
-    if "platforms" not in fresh or "meta" not in fresh:
-        sys.exit("Upstream file has an unexpected shape; not writing it.")
-    target.write_text(json.dumps(fresh, indent=2, ensure_ascii=False) + "\n")
-    print(f"Wrote {target} (last_verified {fresh['meta'].get('last_verified')})")
+        fresh = json.loads(r.read().decode("utf-8"))
+    missing = validate(fresh)
+    if missing:
+        sys.exit("Upstream file is missing required fields; not writing it:\n  " + "\n  ".join(missing[:20]))
+    # upstream points at a schema.json it doesn't ship alongside the data
+    fresh.pop("$schema", None)
+    write_atomic(target, json.dumps(fresh, indent=2, ensure_ascii=False) + "\n")
+    print(f"Wrote {target} (last_verified {fresh['meta']['last_verified']})")
+    if out is None:
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            cmd_markdown(fresh)
+        write_atomic(MARKDOWN, buf.getvalue())
+        print(f"Regenerated {MARKDOWN}")
 
 
 def main(argv):
