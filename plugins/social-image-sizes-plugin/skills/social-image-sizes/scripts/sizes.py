@@ -192,7 +192,7 @@ def cmd_check(data, platform, asset, width, height):
     if w > hi.get("width", w) or h > hi.get("height", h):
         # some maxes are display sizes the platform scales down to, not upload limits
         if re.search(r"displays up to|resized", a.get("qualifier", ""), re.I):
-            warnings.append(f"above display maximum {dims(hi)}; the platform scales it down")
+            warnings.append(f"above display maximum {dims(hi)}; not an upload limit, see notes")
         else:
             problems.append(f"above maximum {dims(hi)}")
 
