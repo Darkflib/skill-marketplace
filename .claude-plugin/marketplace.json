@@ -97,6 +97,11 @@
       "name": "photo-upscale-for-print-plugin",
       "source": "./plugins/photo-upscale-for-print-plugin",
       "description": "Upscale a scanned or low-resolution photograph for large-format print with Real-ESRGAN and a measured finishing chain"
+    },
+    {
+      "name": "social-image-sizes-plugin",
+      "source": "./plugins/social-image-sizes-plugin",
+      "description": "Image dimensions, aspect ratios and file limits for 20 social and web platforms, with Open Graph and Twitter Card images, plus a lookup and fit-check script"
     }
   ]
 }
