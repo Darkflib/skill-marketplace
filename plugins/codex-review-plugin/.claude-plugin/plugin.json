@@ -1,0 +1,5 @@
+{
+  "name": "codex-review-plugin",
+  "description": "Independent code review from the Codex CLI (a different model family), with every finding verified against the code and triaged before anything is fixed",
+  "version": "1.0.0"
+}
