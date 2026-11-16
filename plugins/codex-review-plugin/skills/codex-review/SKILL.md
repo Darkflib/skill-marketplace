@@ -55,7 +55,9 @@ cd <repo> && codex exec review -c sandbox_mode='"read-only"' \
   > <scratchpad>/codex-review-log.txt 2>&1; echo "exit=$?"
 ```
 
-- Add `-m <model>` only if the user names a model.
+- Choose a model only if the user names one. Then pass it both ways,
+  `-m <model> -c review_model='"<model>"'`: review mode prefers a `review_model` from the user's
+  Codex config over `-m`.
 - A review takes from twenty seconds to several minutes. Run it with the Bash tool's
   `run_in_background` and wait for the completion notice. Do not poll and do not kill it for being slow.
 - One review at a time. If it must be stopped, use SIGINT or SIGTERM, never SIGKILL, so codex can
@@ -74,8 +76,11 @@ as such.
 
 - Exit code non-zero, or an empty or missing output file, means the review **failed**. Report the
   error from the log, and do not say "no issues found".
-- Exit 0 with no `[P0]`–`[P3]` items means Codex found nothing. Say so, and say that this is not proof
-  (see below).
+- Exit 0 with no `[P0]`–`[P3]` items is a clean review **only if** the text shows Codex actually
+  reviewed the scope you asked for (its summary describes the change). Codex returns plain-text
+  answers such as "I could not review the requested diff" with exit 0 and no findings. Report those,
+  and any summary of a different or partial scope, as an **incomplete review**, quoting the text. For
+  a genuine clean result, say Codex found nothing and that this is not proof (see below).
 - Findings look like `- [P1] <title> — <absolute path>:<lines>` followed by an explanation. Convert
   paths to repo-relative links.
 
