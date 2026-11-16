@@ -102,6 +102,11 @@
       "name": "social-image-sizes-plugin",
       "source": "./plugins/social-image-sizes-plugin",
       "description": "Image dimensions, aspect ratios and file limits for 20 social and web platforms, with Open Graph and Twitter Card images, plus a lookup and fit-check script"
+    },
+    {
+      "name": "codex-review-plugin",
+      "source": "./plugins/codex-review-plugin",
+      "description": "Independent code review from the Codex CLI (a different model family), with every finding verified against the code and triaged before anything is fixed"
     }
   ]
 }
